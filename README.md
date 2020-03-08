@@ -3,6 +3,8 @@
 ESP8266 12-E NodeMCU kit pinout diagram retrieved from ``https://arduino-esp8266.readthedocs.io/en/latest/reference.html#digital-io``
 ![ESP8266 12-E NodeMCU kit pinout diagram](https://i2.wp.com/randomnerdtutorials.com/wp-content/uploads/2019/05/ESP8266-NodeMCU-kit-12-E-pinout-gpio-pin.png?w=817&ssl=1 "ESP8266 12-E NodeMCU kit pinout diagram")
 
+**Our board type**: NodeMCU 1.0
+
 Angle light magnet type
 - Voltage: 1.5V (3 AAA batteries)
 - Current draw: 180mA
@@ -13,6 +15,7 @@ Sparking egg
 
 Some resources:
 - Guide to ESP8266: https://tttapa.github.io/ESP8266/Chap04%20-%20Microcontroller.html
+- https://randomnerdtutorials.com/esp8266-pinout-reference-gpios/
 - ESP8266 Arduino: https://github.com/esp8266/Arduino
 - Use transistor as a digital switch: https://itp.nyu.edu/physcomp/labs/motors-and-transistors/using-a-transistor-to-control-high-current-loads-with-an-arduino/
 - Capacitive sensing:
