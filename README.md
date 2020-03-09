@@ -22,3 +22,4 @@ Some resources:
 - Capacitive sensing:
     - Arduino library (can be installed directly through Arduino IDE): https://playground.arduino.cc/Main/CapacitiveSensor/
     - Problems with ESP8266: https://forum.arduino.cc/index.php?topic=462160.0
+- ESP8266 control from the internet: https://maker.pro/esp8266/tutorial/esp8266-tutorial-how-to-control-anything-from-the-internet

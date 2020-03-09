@@ -1,0 +1,12 @@
+{
+  "name": "dsc-nus-2020-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1", 
+    "start": "node index"
+  },
+  "author": "TanHaus",
+  "license": "ISC"
+}
