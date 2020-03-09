@@ -15,6 +15,7 @@ Sparking egg
 
 Some resources:
 - Guide to ESP8266: https://tttapa.github.io/ESP8266/Chap04%20-%20Microcontroller.html
+- https://www.make-it.ca/nodemcu-arduino/nodemcu-details-specifications/
 - https://randomnerdtutorials.com/esp8266-pinout-reference-gpios/
 - ESP8266 Arduino: https://github.com/esp8266/Arduino
 - Use transistor as a digital switch: https://itp.nyu.edu/physcomp/labs/motors-and-transistors/using-a-transistor-to-control-high-current-loads-with-an-arduino/
