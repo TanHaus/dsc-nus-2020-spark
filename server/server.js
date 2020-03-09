@@ -8,7 +8,7 @@ app.use(bodyParser.urlencoded());
 app.get('/', (req, res) => res.send('CHROMATICA!'))
 
 app.post("/", (req, res) => {
-    res.send(`${req.body.test}`);
+    res.send(`I got you, ${req.body.test}`);
 });
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
