@@ -15,9 +15,11 @@ Sparking egg
 
 Some resources:
 - Guide to ESP8266: https://tttapa.github.io/ESP8266/Chap04%20-%20Microcontroller.html
+- https://www.make-it.ca/nodemcu-arduino/nodemcu-details-specifications/
 - https://randomnerdtutorials.com/esp8266-pinout-reference-gpios/
 - ESP8266 Arduino: https://github.com/esp8266/Arduino
 - Use transistor as a digital switch: https://itp.nyu.edu/physcomp/labs/motors-and-transistors/using-a-transistor-to-control-high-current-loads-with-an-arduino/
 - Capacitive sensing:
     - Arduino library (can be installed directly through Arduino IDE): https://playground.arduino.cc/Main/CapacitiveSensor/
     - Problems with ESP8266: https://forum.arduino.cc/index.php?topic=462160.0
+- ESP8266 control from the internet: https://maker.pro/esp8266/tutorial/esp8266-tutorial-how-to-control-anything-from-the-internet
