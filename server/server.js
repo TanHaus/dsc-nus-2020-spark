@@ -24,7 +24,7 @@ app.get('/', (req, res) => {
 })
 
 app.post("/", (req, res) => {
-    res.send(`I got you, ${req.body}`);
+    res.send(`I got you, ${req.body.content}`);
 });
 
 app.get('/state', (req,res) => {
