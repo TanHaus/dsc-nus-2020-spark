@@ -27,15 +27,20 @@ app.post("/", (req, res) => {
     res.send(`I got you, ${req.body.test}`);
 });
 
-app.get('/state', (req,res) => {
-    let name = req.body.name
+app.get('/state/:name', (req,res) => {
+    let name = req.params.name
     let index = names.indexOf(name)
     if(index == -1) {
         // do something
     } else {
         // do something
+        res.send(lamps[index].state)
     }
     res.send()
+})
+
+app.get('/all', (req,res) => {
+    res.send(JSON.stringify(lamps))
 })
 
 app.post('/send', (req, res) => {

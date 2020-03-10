@@ -23,3 +23,33 @@ Some resources:
     - Arduino library (can be installed directly through Arduino IDE): https://playground.arduino.cc/Main/CapacitiveSensor/
     - Problems with ESP8266: https://forum.arduino.cc/index.php?topic=462160.0
 - ESP8266 control from the internet: https://maker.pro/esp8266/tutorial/esp8266-tutorial-how-to-control-anything-from-the-internet
+
+## Internet connection
+
+Source: https://techtutorialsx.com/2016/07/17/esp8266-http-get-requests/
+
+POST and GET requests
+
+Libraries
+```Cpp
+#include <ESP8266WiFi.h>
+#include <ESP8266HTTPClient.h>
+```
+
+Main code
+```cpp
+HTTPClient http;
+
+http.begin("http://jsonplaceholder.typicode.com/users/1");
+
+int httpCode = http.GET();
+String payload = http.getString();   //Get the request response payload 
+
+http.end();   //Close connection
+```
+
+For POST request
+```cpp
+http.addHeader("Content-Type", "application/x-www-form-urlencoded");
+int httpCode = http.POST("content=Hello");    //Send POST request
+```
