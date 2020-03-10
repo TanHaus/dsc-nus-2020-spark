@@ -27,14 +27,17 @@ app.post("/", (req, res) => {
     res.send(`I got you, ${req.body.content}`);
 });
 
-app.get('/state/:name', (req,res) => {
-    let name = req.params.name
+app.get('/state', (req,res) => {
+    let name = req.query.name
     let index = names.indexOf(name)
+
     if(index == -1) {
         // do something
+        res.send('Can\'t find anything yo')
     } else {
         // do something
-        res.send(lamps[index].state)
+        console.log(lamps[index])
+        res.send(lamps[index].state.toString())
     }
     res.send()
 })
@@ -43,8 +46,11 @@ app.get('/all', (req,res) => {
     res.send(JSON.stringify(lamps))
 })
 
-app.post('/send', (req, res) => {
+app.post('/state', (req, res) => {
+    let name = req.body.name
+    let index = names.indexOf(name)
 
+    lamps[index].toggleState()
 })
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
