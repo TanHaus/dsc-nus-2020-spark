@@ -4,8 +4,11 @@
 #include <WiFiClient.h>
 #include <ESP8266WiFi.h>
 
+#define LED 1
+#define BUTTON 2
+
 void retrieveState();
-void updateState();
+void updateState(int state);
 
 const String name = "lamp1";
 const String serverURL = "http://nameless-journey-44724.herokuapp.com/";
@@ -22,27 +25,34 @@ void setup() {
     Serial.println("Waiting for connection");
  
   }
+
+  pinMode(LED, OUTPUT);    // LED pin as output.
+  pinMode(BUTTON, INPUT);
 }
 
 void loop() {
   // put your main code here, to run repeatedly:
   if(WiFi.status()== WL_CONNECTED) {   //Check WiFi connection status
+    int isPressed = digitalRead(BUTTON);
+    // isPressed = 0;
+    updateState(isPressed);
     retrieveState();
-    updateState();
- 
+  
  } else {
  
     Serial.println("Error in WiFi connection");   
  
  }
  
-  delay(5000);  //Send a request every 30 seconds
+  delay(100);  //Send a request every 30 seconds
 }
 
 void retrieveState() {
   HTTPClient http;    //Declare object of class HTTPClient
  
-  http.begin(serverURL + "state?name=" + name);      //Specify request destination
+  String getURL = serverURL + "state?name=" + name;
+  Serial.println(getURL);
+  http.begin(getURL);      //Specify request destination
   
   int httpCode = http.GET();   //Send GET request
   String payload = http.getString();                  //Get the response payload
@@ -50,17 +60,22 @@ void retrieveState() {
   Serial.print("return code: ");   //Print HTTP return code
   Serial.println(httpCode);
   Serial.println("payload: " + payload);    //Print request response payload
-
+  
+  int state = payload.toInt();
+  digitalWrite(LED, !state);// turn the LED off.(Note that LOW is the voltage level but actually 
+  
   http.end();  //Close connection
 }
 
-void updateState() {
+void updateState(int state) {
   HTTPClient http;    //Declare object of class HTTPClient
  
-  http.begin(serverURL + "state");      //Specify request destination
+  String postURL = serverURL + "state";
+  Serial.println(postURL);
+  http.begin(postURL);      //Specify request destination
   
   http.addHeader("Content-Type", "application/x-www-form-urlencoded");  //Specify content-type header
-  int httpCode = http.POST("name=" + name);    //Send POST request
+  int httpCode = http.POST("name=" + name + "&state=" + state);    //Send POST request
   String payload = http.getString();                  //Get the response payload
  
   Serial.print("return code: ");   //Print HTTP return code
@@ -69,3 +84,4 @@ void updateState() {
 
   http.end();  //Close connection
 }
+

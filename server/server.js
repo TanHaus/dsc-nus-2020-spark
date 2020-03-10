@@ -48,9 +48,10 @@ app.get('/all', (req,res) => {
 
 app.post('/state', (req, res) => {
     let name = req.body.name
+    let state = parseInt(req.body.state)
     let index = names.indexOf(name)
 
-    lamps[index].toggleState()
+    lamps[index].state = state
 })
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
