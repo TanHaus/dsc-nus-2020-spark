@@ -20,10 +20,14 @@ const bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded());
 
 app.get('/', (req, res) => {
+    console.log('Load homepage')
+    res.status(200)
     res.sendFile('html/index.html', {root: __dirname})
 })
 
 app.post("/", (req, res) => {
+    console.log('Test connection')
+    res.status(200)
     res.send(`I got you, ${req.body.content}`);
 });
 
@@ -32,26 +36,44 @@ app.get('/state', (req,res) => {
     let index = names.indexOf(name)
 
     if(index == -1) {
-        // do something
+        console.log('Lamp not found')
+        res.status(403)
         res.send('Can\'t find anything yo')
     } else {
-        // do something
-        console.log(lamps[index])
+        console.log(`Get state of ${names[index]}`)
         res.send(lamps[index].state.toString())
     }
     res.send()
 })
 
 app.get('/all', (req,res) => {
+    console.log('Get all lamps')
+    res.status(200)
     res.send(JSON.stringify(lamps))
+})
+
+app.get('/names', (req,res) => {
+    console.log('Get names')
+    res.status(200)
+    res.send(JSON.stringify(names))
 })
 
 app.post('/state', (req, res) => {
     let name = req.body.name
     let state = parseInt(req.body.state)
     let index = names.indexOf(name)
+    console.log(`Set state of ${name} to ${state}`)
 
-    lamps[index].state = state
+    if(index>-1) {
+        console.log('Successful')
+        lamps[index].state = state
+        res.status(200)
+        res.send('Successful')
+    } else {
+        console.log('Lamp not found')
+        res.status(404)
+        res.send('Failed')
+    }
 })
 
-app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+app.listen(port, () => console.log(`NUS DSC 2020 app listening on port ${port}!`))

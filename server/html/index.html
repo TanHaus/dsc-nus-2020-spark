@@ -20,32 +20,60 @@
             </tr>
         </thead>
         <tbody>
+            <tr>
+                <th>Lamp 1</th>
+                <th class="lampState"></th>
+                <th><button onclick=toggle(0)>Toggle</button></th>
+            </tr>
+            <tr>
+                <th>Lamp 2</th>
+                <th class="lampState"></th>
+                <th><button onclick=toggle(1)>Toggle</button></th>
+            </tr>
         </tbody>
     </table>
 
+    <button onclick=refresh()>Refresh</button>
+
     <script>
-        fetch('/all')
+        let names
+
+        fetch('/names')
         .then((res) => res.json())
         .then((data) => {
-            console.log(data)
-            for(let i=0; i<data.length; i++) addLamp(data[i])
+            names = data
+            console.log(names)
         })
 
         let table = document.querySelector("#lamps")
+        let lampState = document.querySelectorAll('.lampState')
 
-        let addLamp = lamp => {
-            let row = table.insertRow()
-            let keys = ['name', 'state']
-            for(let i=0; i<keys.length; i++) {
-                let key = keys[i]
-                let cell = row.insertCell()
-                cell.innerText = lamp[key]
-            }
-            let cell = row.insertCell()
-            let button = document.createElement('button')
-            button.innerText = 'Toggle'
-            cell.appendChild(button)
+        function updateLamp(index, data){
+            lampState[index].innerText = data
         }
+
+        async function toggle(index) {
+            let state = parseInt(lampState[index].innerText)
+            fetch('/state', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: `name=${names[index]}&state=${1-state}`
+            })
+            refresh()
+        }
+
+        async function refresh() {
+            fetch('/all')
+            .then((res) => res.json())
+            .then((data) => {
+                console.log(data)
+                for(let i=0; i<data.length; i++) updateLamp(i, data[i].state)
+            })
+        }
+
+        refresh()
     </script>
 </body>
 </html>
