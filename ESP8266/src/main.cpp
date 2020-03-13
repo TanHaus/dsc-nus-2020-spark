@@ -41,38 +41,40 @@ bool isOn = true;
 long startTime = 0;
 double analogOutput = 1;
 
+long sensorTime = 0;
+
 void loop() {
   // put your main code here, to run repeatedly:
-  
-  if(WiFi.status() == WL_CONNECTED) { 
-    // retrieveState();
-    int touch = capSensor.capacitiveSensor(30);
-    if(touch > threshold) {
-      // updateState(1);
-      isOn = true;
-      // digitalWrite(LED2, HIGH);
-      startTime = millis();
-    } else {
-      // updateState(0);
-      isOn = false;
-      // digitalWrite(LED2, LOW);
-    }
-
-    // code for slowly turn on
-    if(isOn) {
-      long currentTime = millis();
-      if(currentTime - startTime > 100) {
-        analogWrite(LED2, (int)analogOutput-1);
-        analogOutput = (analogOutput>=1023) ? 1023 : (analogOutput<255 | analogOutput > 764) ? analogOutput*1.2 : analogOutput* 1.4;
+  long sensorCurrentTime = millis();
+  if(sensorCurrentTime - sensorTime > 500) {
+    if(WiFi.status() == WL_CONNECTED) { 
+      retrieveState();
+      int touch = capSensor.capacitiveSensor(30);
+      if(touch > threshold) {
+        updateState(1);
+        isOn = true;
+        // digitalWrite(LED2, HIGH);
         startTime = millis();
+        sensorTime = millis();
+      } else {
+        updateState(0);
+        isOn = false;
+        // digitalWrite(LED2, LOW);
       }
-      
-    } else {
-      // digitalWrite(LED2, LOW);
-      // analogOutput = 1;
+    }
+  }
+
+  // code for slowly turn on
+  if(isOn) {
+    long currentTime = millis();
+    if(currentTime - startTime > 50) {
+      analogWrite(LED2, (int)analogOutput-1);
+      analogOutput = (analogOutput>=1023) ? 1023 : (analogOutput<255 || analogOutput > 764) ? analogOutput*1.2 : analogOutput* 1.4;
+      startTime = millis();
     }
   } else {
-      Serial.println("Error in WiFi connection");   
+    digitalWrite(LED2, LOW);
+    analogOutput = 1;
   }
 
   delay(50);
