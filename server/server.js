@@ -22,7 +22,7 @@ app.use(bodyParser.urlencoded());
 app.get('/', (req, res) => {
     console.log('Load homepage')
     res.status(200)
-    res.sendFile('html/index.html', {root: __dirname})
+    res.sendFile('public/index.html', {root: __dirname})
 })
 
 app.post("/", (req, res) => {
