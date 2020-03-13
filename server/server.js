@@ -13,11 +13,11 @@ class Lamp {
     }
 }
 
-let names = ['lamp1', 'lamp2']
+let names = ['2730997', '2730081']
 let lamps = names.map(name => new Lamp(name))
 
-const bodyParser = require("body-parser");
-app.use(bodyParser.urlencoded());
+app.use(express.json());
+app.use(express.urlencoded());
 
 app.get('/', (req, res) => {
     console.log('Load homepage')
@@ -45,19 +45,6 @@ app.get('/state', (req,res) => {
     }
     res.send()
 })
-
-app.get('/all', (req,res) => {
-    console.log('Get all lamps')
-    res.status(200)
-    res.send(JSON.stringify(lamps))
-})
-
-app.get('/names', (req,res) => {
-    console.log('Get names')
-    res.status(200)
-    res.send(JSON.stringify(names))
-})
-
 app.post('/state', (req, res) => {
     let name = req.body.name
     let state = parseInt(req.body.state)
@@ -75,5 +62,20 @@ app.post('/state', (req, res) => {
         res.send('Failed')
     }
 })
+
+
+app.get('/all', (req,res) => {
+    console.log('Get all lamps')
+    res.status(200)
+    res.send(JSON.stringify(lamps))
+})
+
+app.get('/names', (req,res) => {
+    console.log('Get names')
+    res.status(200)
+    res.send(JSON.stringify(names))
+})
+
+
 
 app.listen(port, () => console.log(`NUS DSC 2020 app listening on port ${port}!`))

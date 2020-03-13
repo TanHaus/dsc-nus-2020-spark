@@ -6,12 +6,16 @@
 #define LED 1
 #define CapSEND 2
 #define capRECEIVE 14
-#define LED2 3
 
-void retrieveState();
+int thisLamp = ESP.getChipId();
+int otherLamp = thisLamp == 2730997 ? 2730081 : 2730997;
+
+int thisLampState = 0;
+int otherLampState = 0;
+
+void getStates();
 void updateState(int state);
 
-const String name = "lamp1";
 const String serverURL = "http://nameless-journey-44724.herokuapp.com/";
 
 CapacitiveSensor capSensor = CapacitiveSensor(CapSEND,capRECEIVE);
@@ -28,76 +32,41 @@ void setup() {
     delay(500);
     Serial.println("Waiting for connection");
     Serial.println(capSensor.capacitiveSensor(30));
-    Serial.println(millis());
   }
   Serial.println("Success");
 
   pinMode(LED, OUTPUT);
-  pinMode(LED2, OUTPUT);
   delay(500);
 }
 
-bool isOn = true;
-long startTime = 0;
-double analogOutput = 1;
-
-long sensorTime = 0;
-
 void loop() {
-  // put your main code here, to run repeatedly:
-  long sensorCurrentTime = millis();
-  if(sensorCurrentTime - sensorTime > 500) {
-    if(WiFi.status() == WL_CONNECTED) { 
-      retrieveState();
-      int touch = capSensor.capacitiveSensor(30);
-      if(touch > threshold) {
-        updateState(1);
-        isOn = true;
-        // digitalWrite(LED2, HIGH);
-        startTime = millis();
-        sensorTime = millis();
-      } else {
-        updateState(0);
-        isOn = false;
-        // digitalWrite(LED2, LOW);
-      }
-    }
+  int thisLampStateTemp = getState(thisLamp);
+  otherLampState = getState(otherLamp);
+
+  if (thisLampState == 0 && thisLampStateTemp == 1) {
+    thisLampState = thisLampStateTemp;
+    lightUp();
+  } else if ()
   }
 
-  // code for slowly turn on
-  if(isOn) {
-    long currentTime = millis();
-    if(currentTime - startTime > 50) {
-      analogWrite(LED2, (int)analogOutput-1);
-      analogOutput = (analogOutput>=1023) ? 1023 : (analogOutput<255 || analogOutput > 764) ? analogOutput*1.2 : analogOutput* 1.4;
-      startTime = millis();
-    }
-  } else {
-    digitalWrite(LED2, LOW);
-    analogOutput = 1;
-  }
-
-  delay(50);
 }
 
-void retrieveState() {
+int getStates(int lampID) {
   HTTPClient http;    //Declare object of class HTTPClient
  
-  String getURL = serverURL + "state?name=" + name;
-  Serial.println(getURL);
+  String getURL = serverURL + "state?name=" + lampID;
   http.begin(getURL);      //Specify request destination
   
   int httpCode = http.GET();   //Send GET request
   String payload = http.getString();                  //Get the response payload
  
-  Serial.print("return code: ");   //Print HTTP return code
-  Serial.println(httpCode);
-  Serial.println("payload: " + payload);    //Print request response payload
-  
-  int state = payload.toInt();
-  digitalWrite(LED, !state);// turn the LED off.(Note that LOW is the voltage level but actually 
-  
   http.end();  //Close connection
+  
+  return payload.toInt();  
+}
+
+void lightUp() {
+
 }
 
 void updateState(int state) {
