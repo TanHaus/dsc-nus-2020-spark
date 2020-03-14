@@ -7,11 +7,17 @@
 #define CapSEND 2
 #define capRECEIVE 14
 
+int getState(int);
+int updateOtherLampState(int);
+void lightUp();
+
 int thisLamp = ESP.getChipId();
 int otherLamp = thisLamp == 2730997 ? 2730081 : 2730997;
 
-int thisLampState = 0;
-int otherLampState = 0;
+int thisLampStateServer = 0;
+int thisLampStateLocal = 0;
+int otherLampStateServer = 0;
+int otherLampStateSensor = 0;
 
 void getStates();
 void updateState(int state);
@@ -19,7 +25,7 @@ void updateState(int state);
 const String serverURL = "http://nameless-journey-44724.herokuapp.com/";
 
 CapacitiveSensor capSensor = CapacitiveSensor(CapSEND,capRECEIVE);
-int threshold = 1000; // change value here when calibrate sensor
+int threshold = 30; // change value here when calibrate sensor
 
 void setup() {
   // put your setup code here, to run once:
@@ -40,18 +46,36 @@ void setup() {
 }
 
 void loop() {
-  int thisLampStateTemp = getState(thisLamp);
-  otherLampState = getState(otherLamp);
+  // GET request to obtain current lamp states from server
+  thisLampStateServer = getState(thisLamp);
+  otherLampStateServer = getState(otherLamp);
 
-  if (thisLampState == 0 && thisLampStateTemp == 1) {
-    thisLampState = thisLampStateTemp;
+  // check the state of this lamp and update accordingly
+  if (thisLampStateLocal == 0 && thisLampStateServer == 1) {
     lightUp();
-  } else if ()
+  } else if (thisLampStateLocal == 1 && thisLampStateServer == 0) {
+    digitalWrite(LED, 0);
   }
+  thisLampStateLocal = thisLampStateServer;
+
+  // get the state of the other lamp from the sensor
+  int touch = capSensor.capacitiveSensor(30);
+    if(touch > threshold) {
+      otherLampStateSensor = 1;
+    } else {
+      otherLampStateSensor = 0;
+    }
+
+  // check the state of the other lamp with the server value. if different then send POST request to server to update.
+  if (otherLampStateSensor != otherLampStateServer) {
+    updateOtherLampState(otherLampStateSensor);
+  }
+
+  delay(50);
 
 }
 
-int getStates(int lampID) {
+int getState(int lampID) {
   HTTPClient http;    //Declare object of class HTTPClient
  
   String getURL = serverURL + "state?name=" + lampID;
@@ -65,11 +89,7 @@ int getStates(int lampID) {
   return payload.toInt();  
 }
 
-void lightUp() {
-
-}
-
-void updateState(int state) {
+int updateOtherLampState(int state) {
   HTTPClient http;    //Declare object of class HTTPClient
  
   String postURL = serverURL + "state";
@@ -77,7 +97,7 @@ void updateState(int state) {
   http.begin(postURL);      //Specify request destination
   
   http.addHeader("Content-Type", "application/x-www-form-urlencoded");  //Specify content-type header
-  int httpCode = http.POST("name=" + name + "&state=" + state);    //Send POST request
+  int httpCode = http.POST("name=" + String(otherLamp) + "&state=" + String(state));    //Send POST request
   String payload = http.getString();                  //Get the response payload
  
   Serial.print("return code: ");   //Print HTTP return code
@@ -85,4 +105,14 @@ void updateState(int state) {
   Serial.println("payload: " + payload);    //Print request response payload
 
   http.end();  //Close connection
+
+  return payload.toInt();
+}
+
+void lightUp() {
+  double i = 1; 
+  while (i<1024) {
+    analogWrite(LED, (int)i - 1);
+    i = (i>=1023) ? 1023 : (i<255 || i > 764) ? i*1.2 : i* 1.4;
+  }
 }

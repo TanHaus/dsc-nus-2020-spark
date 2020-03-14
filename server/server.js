@@ -45,6 +45,7 @@ app.get('/state', (req,res) => {
     }
     res.send()
 })
+
 app.post('/state', (req, res) => {
     let name = req.body.name
     let state = parseInt(req.body.state)
@@ -63,7 +64,6 @@ app.post('/state', (req, res) => {
     }
 })
 
-
 app.get('/all', (req,res) => {
     console.log('Get all lamps')
     res.status(200)
@@ -75,7 +75,5 @@ app.get('/names', (req,res) => {
     res.status(200)
     res.send(JSON.stringify(names))
 })
-
-
 
 app.listen(port, () => console.log(`NUS DSC 2020 app listening on port ${port}!`))
