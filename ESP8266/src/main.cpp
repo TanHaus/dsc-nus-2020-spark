@@ -71,7 +71,7 @@ void loop() {
     updateOtherLampState(otherLampStateSensor);
   }
 
-  delay(50);
+  delay(200);
 
 }
 
@@ -114,5 +114,6 @@ void lightUp() {
   while (i<1024) {
     analogWrite(LED, (int)i - 1);
     i = (i>=1023) ? 1023 : (i<255 || i > 764) ? i*1.2 : i* 1.4;
+    delay(50);
   }
 }
