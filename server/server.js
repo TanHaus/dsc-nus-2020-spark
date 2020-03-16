@@ -43,7 +43,6 @@ app.get('/state', (req,res) => {
         console.log(`Get state of ${names[index]}`)
         res.send(lamps[index].state.toString())
     }
-    res.send()
 })
 
 app.post('/state', (req, res) => {

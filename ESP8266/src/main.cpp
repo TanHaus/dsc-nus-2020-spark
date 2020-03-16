@@ -4,6 +4,7 @@
 #include <CapacitiveSensor.h>
 
 #define LED 1
+#define LED2 3
 #define CapSEND 2
 #define capRECEIVE 14
 
@@ -25,7 +26,7 @@ void updateState(int state);
 const String serverURL = "http://nameless-journey-44724.herokuapp.com/";
 
 CapacitiveSensor capSensor = CapacitiveSensor(CapSEND,capRECEIVE);
-int threshold = 30; // change value here when calibrate sensor
+int threshold = 800; // change value here when calibrate sensor
 
 void setup() {
   // put your setup code here, to run once:
@@ -37,11 +38,12 @@ void setup() {
   while (WiFi.status() != WL_CONNECTED) {
     delay(500);
     Serial.println("Waiting for connection");
-    Serial.println(capSensor.capacitiveSensor(30));
+    Serial.println(capSensor.capacitiveSensorRaw(30));
   }
   Serial.println("Success");
 
   pinMode(LED, OUTPUT);
+  pinMode(LED2, OUTPUT);
   delay(500);
 }
 
@@ -55,11 +57,12 @@ void loop() {
     lightUp();
   } else if (thisLampStateLocal == 1 && thisLampStateServer == 0) {
     digitalWrite(LED, 0);
+    digitalWrite(LED2, 0);
   }
   thisLampStateLocal = thisLampStateServer;
 
   // get the state of the other lamp from the sensor
-  int touch = capSensor.capacitiveSensor(30);
+  int touch = capSensor.capacitiveSensorRaw(30);
     if(touch > threshold) {
       otherLampStateSensor = 1;
     } else {
@@ -96,13 +99,9 @@ int updateOtherLampState(int state) {
   Serial.println(postURL);
   http.begin(postURL);      //Specify request destination
   
-  http.addHeader("Content-Type", "application/x-www-form-urlencoded");  //Specify content-type header
-  int httpCode = http.POST("name=" + String(otherLamp) + "&state=" + String(state));    //Send POST request
+  http.addHeader("Content-Type", "application/json");  //Specify content-type header
+  int httpCode = http.POST("{\"name\":\"" + String(otherLamp) + "\",\"state\":\"" + String(state) + "\"}");    //Send POST request
   String payload = http.getString();                  //Get the response payload
- 
-  Serial.print("return code: ");   //Print HTTP return code
-  Serial.println(httpCode);
-  Serial.println("payload: " + payload);    //Print request response payload
 
   http.end();  //Close connection
 
@@ -113,6 +112,7 @@ void lightUp() {
   double i = 1; 
   while (i<1024) {
     analogWrite(LED, (int)i - 1);
+    analogWrite(LED2, (int)i - 1);
     i = (i>=1023) ? 1023 : (i<255 || i > 764) ? i*1.2 : i* 1.4;
     delay(50);
   }
