@@ -31,7 +31,7 @@ Source: https://techtutorialsx.com/2016/07/17/esp8266-http-get-requests/
 POST and GET requests
 
 Libraries
-```Cpp
+```cpp
 #include <ESP8266WiFi.h>
 #include <ESP8266HTTPClient.h>
 ```
@@ -53,3 +53,7 @@ For POST request
 http.addHeader("Content-Type", "application/x-www-form-urlencoded");
 int httpCode = http.POST("content=Hello");    //Send POST request
 ```
+
+## Circuit diagram
+
+![circuit diagram](circuit&#32;diagram&#32;with&#32;bg.png)
