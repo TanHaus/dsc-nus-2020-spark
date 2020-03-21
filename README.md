@@ -8,7 +8,7 @@ Google slides link: https://tinyurl.com/sparkpitchdeck
 
 Areas covered:
 - Problem Statement & Scope
-- Motivation for Solution
+- Solution & Motivation
 - Circuit Diagram
 - Signal Flow
 - Code Review
