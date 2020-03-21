@@ -2,7 +2,7 @@
 
 ## Pitch Deck & Videos
 
-Google slides link: https://docs.google.com/presentation/d/1xdLZvk9dbZq9XlXSCC27bYtxi7I_jPIso7VwoPeOLsY/edit?usp=sharing
+Google slides link: https://tinyurl.com/sparkpitchdeck
 
 Areas covered:
 - Problem Statement & Scope
