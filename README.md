@@ -80,6 +80,4 @@ int httpCode = http.POST("content=Hello");    //Send POST request
 
 ![circuit diagram](circuit&#32;diagram&#32;with&#32;bg.png)
 
-![electrical components](electrical&#32;components.png=250x250)
-
 <img src="https://github.com/TanHaus/dsc-nus-2020-spark/blob/master/electrical%20components.png?raw=true" width="50%">
