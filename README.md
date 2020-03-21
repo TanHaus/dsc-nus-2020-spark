@@ -1,4 +1,24 @@
-# dsc-nus-2020: spark|TanHaus
+# dsc-nus-2020: spark | TanHaus
+
+## Pitch Deck & Videos
+
+Google slides link: https://docs.google.com/presentation/d/1xdLZvk9dbZq9XlXSCC27bYtxi7I_jPIso7VwoPeOLsY/edit?usp=sharing
+
+Areas covered:
+- Problem Statement & Scope
+- Motivation for Solution
+- Circuit Diagram
+- Signal Flow
+- Code Review
+- User Stories
+- Impact & Novelty
+- Further Developments
+
+Videos:
+- Promotional Video: https://youtu.be/5YZy3o9l7lA
+- Demo Video: https://youtu.be/mlj6l9t8dcU
+
+## Technical Aspects
 
 ESP8266 12-E NodeMCU kit pinout diagram retrieved from ``https://arduino-esp8266.readthedocs.io/en/latest/reference.html#digital-io``
 ![ESP8266 12-E NodeMCU kit pinout diagram](https://i2.wp.com/randomnerdtutorials.com/wp-content/uploads/2019/05/ESP8266-NodeMCU-kit-12-E-pinout-gpio-pin.png?w=817&ssl=1 "ESP8266 12-E NodeMCU kit pinout diagram")
@@ -57,18 +77,3 @@ int httpCode = http.POST("content=Hello");    //Send POST request
 ## Circuit diagram
 
 ![circuit diagram](circuit&#32;diagram&#32;with&#32;bg.png)
-
-
-## Pitch Deck
-
-Check it out at this link: https://docs.google.com/presentation/d/1xdLZvk9dbZq9XlXSCC27bYtxi7I_jPIso7VwoPeOLsY/edit?usp=sharing
-
-We cover areas of our project such as:
-- Problem Statement & Scope
-- Motivation for Solution
-- Circuit Diagram
-- Signal Flow
-- Code Review
-- User Stories
-- Impact & Novelty
-- Further Developments
