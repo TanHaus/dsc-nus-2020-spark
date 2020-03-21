@@ -1,5 +1,7 @@
 # dsc-nus-2020: spark | TanHaus
 
+![cover photo](cover&#32;photo.png)
+
 ## Pitch Deck & Videos
 
 Google slides link: https://tinyurl.com/sparkpitchdeck
@@ -77,3 +79,5 @@ int httpCode = http.POST("content=Hello");    //Send POST request
 ## Circuit diagram
 
 ![circuit diagram](circuit&#32;diagram&#32;with&#32;bg.png)
+
+![electrical components](electrical&#32;components.png)
