@@ -57,3 +57,17 @@ int httpCode = http.POST("content=Hello");    //Send POST request
 ## Circuit diagram
 
 ![circuit diagram](circuit&#32;diagram&#32;with&#32;bg.png)
+
+
+## Pitch Deck for spark by TanHaus
+
+Check it out at this link: https://docs.google.com/presentation/d/1xdLZvk9dbZq9XlXSCC27bYtxi7I_jPIso7VwoPeOLsY/edit?usp=sharing
+We cover areas of our project such as:
+-Problem Statement & Scope
+-Motivation for Solution
+-Circuit Diagram
+-Signal Flow
+-Code Review
+-User Stories
+-Impact & Novelty
+-Further Developments
